@@ -5,6 +5,7 @@
   "private": true,
   "description": "MyKoop event logger.",
   "authors": [
+    "Michael Ferris <mike.ferris@hotmail.com>",
     "Mathieu M-Gosselin <mathieumg@novivia.com>",
     "Maxime Poulin <mpoulin@novivia.com>"
   ],
@@ -18,5 +19,8 @@
     "mykoop-utils": "my-koop/module.utils",
     "pkginfo-json5": "mathieumg/pkginfo-json5#v0.4.0",
     "winston": "mathieumg/winston"
+  },
+  "typescript": {
+    "definition": "typings/mykoop-logger/mykoop-logger.d.ts"
   }
 }
