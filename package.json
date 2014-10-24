@@ -1,0 +1,22 @@
+{
+  "name": "mykoop-logger",
+  "role": "logger",
+  "version": "0.3.0",
+  "private": true,
+  "description": "MyKoop event logger.",
+  "authors": [
+    "Mathieu M-Gosselin <mathieumg@novivia.com>",
+    "Maxime Poulin <mpoulin@novivia.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/my-koop/module.logger"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "lodash": "^2.4.1",
+    "mykoop-utils": "my-koop/module.utils",
+    "pkginfo-json5": "mathieumg/pkginfo-json5#v0.4.0",
+    "winston": "mathieumg/winston"
+  }
+}
