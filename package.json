@@ -16,6 +16,7 @@
   "main": "index.js",
   "dependencies": {
     "lodash": "^2.4.1",
+    "mkdirp": "^0.5.0",
     "mykoop-utils": "my-koop/module.utils",
     "pkginfo-json5": "mathieumg/pkginfo-json5#v0.4.0",
     "winston": "mathieumg/winston"

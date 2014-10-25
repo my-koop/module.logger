@@ -1,5 +1,5 @@
 /// <reference path="typings/tsd.d.ts" />
-var _ = require("lodash"), pkginfo = require("pkginfo-json5"), utilities = require("mykoop-utils"), winston = require("winston");
+var _ = require("lodash"), pkginfo = require("pkginfo-json5"), utilities = require("mykoop-utils"), winston = require("winston"), fs = require("fs"), mkdirp = require("mkdirp"), path = require("path");
 
 var __DEV__ = utilities.__DEV__;
 
@@ -37,8 +37,30 @@ function localISOString(d, ignoreTimezone) {
 }
 ;
 
+function getNow() {
+    var now = new Date();
+    var nowISOString;
+
+    if (__DEV__) {
+        // ISO-like date, but do as if current timezone was UTC.
+        nowISOString = localISOString(now, true);
+    } else {
+        // Return UTC date and time unless in development.
+        nowISOString = now.toISOString();
+    }
+
+    return nowISOString.replace(/T/, ' ').replace(/\..+/, '');
+}
+
 // Remove default (basic) console logger.
 winston.remove(winston.transports.Console);
+
+var bootTimeLabel = getNow().replace(/[ :]/g, '_');
+var logDir = path.resolve(process.cwd(), "logs", bootTimeLabel);
+console.log(logDir);
+if (!fs.existsSync(logDir)) {
+    mkdirp.sync(logDir);
+}
 
 function LoggerProxy(name) {
     this.consoleTransport = new (winston.transports.Console)({
@@ -46,27 +68,25 @@ function LoggerProxy(name) {
         handleExceptions: true,
         prettyPrint: true,
         colorize: true,
-        timestamp: function () {
-            var now = new Date();
-            var nowISOString;
+        timestamp: getNow,
+        label: (name || undefined)
+    });
+    var logFile = path.resolve(logDir, (name || "winston") + ".log");
 
-            if (__DEV__) {
-                // ISO-like date, but do as if current timezone was UTC.
-                nowISOString = localISOString(now, true);
-            } else {
-                // Return UTC date and time unless in development.
-                nowISOString = now.toISOString();
-            }
-
-            return nowISOString.replace(/T/, ' ').replace(/\..+/, '');
-        },
+    this.fileTransport = new (winston.transports.File)({
+        filename: logFile,
+        level: "silly",
+        prettyPrint: true,
+        colorize: true,
+        timestamp: getNow,
         label: (name || undefined)
     });
 
     this.logger = new (winston.Logger)({
         padLevels: true,
         transports: [
-            this.consoleTransport
+            this.consoleTransport,
+            this.fileTransport
         ]
     });
 }
