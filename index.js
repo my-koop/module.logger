@@ -76,7 +76,7 @@ function LoggerProxy(name) {
     this.fileTransport = new (winston.transports.File)({
         filename: logFile,
         level: "silly",
-        prettyPrint: true,
+        prettyPrint: false,
         colorize: true,
         timestamp: getNow,
         label: (name || undefined)
