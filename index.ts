@@ -82,6 +82,7 @@ function LoggerProxy(name: string) {
     prettyPrint: true,
     colorize: true,
     timestamp: getNow,
+    showMeta: true,
     label: (name || undefined)
   });
   var logFile = path.resolve(logDir, (name || "winston") + ".log");
