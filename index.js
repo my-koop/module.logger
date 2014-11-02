@@ -1,7 +1,10 @@
 /// <reference path="typings/tsd.d.ts" />
-var _ = require("lodash"), pkginfo = require("pkginfo-json5"), utilities = require("mykoop-utils"), winston = require("winston"), fs = require("fs"), mkdirp = require("mkdirp"), path = require("path");
+var _ = require("lodash"), pkginfo = require("pkginfo-json5"), winston = require("winston"), fs = require("fs"), mkdirp = require("mkdirp"), path = require("path");
 
-var __DEV__ = utilities.__DEV__;
+var NODE_ENV = process.env.NODE_ENV || "development";
+
+// In development.
+var __DEV__ = (NODE_ENV === "development");
 
 var defaultLevel = __DEV__ ? "verbose" : "info";
 var loggers = {};
