@@ -10,6 +10,10 @@ var defaultLevel = __DEV__ ? "verbose" : "info";
 var loggers = {};
 var unknownCount = 0;
 
+// We are forcing winston to handle unhandled exceptions, therefore it is
+// our responsibility to bust this limit, not winston's.
+process.setMaxListeners(Infinity);
+
 // Utility to redirect a prototype call to a member implementation.
 function proxyMethod(proxyClass, implementationProperty, methodName) {
     proxyClass.prototype[methodName] = function () {
